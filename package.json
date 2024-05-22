@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npx vite --host",
     "build": "tsc && vite build",
     "lint": "npm run lint",
     "lint-fix": "npm run lint --fix",
@@ -13,6 +13,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.23.1",
     "styled-components": "^6.1.9"
   },
   "devDependencies": {
