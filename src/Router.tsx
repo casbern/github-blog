@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 
-import { Blog } from './pages/Blog'
-import { Post } from './pages/Post'
+import { Blog } from './pages/Blog/index.tsx'
+import { Post } from './pages/Post/index.tsx'
 import { DefaultLayout } from './layouts/DefaultLayout/index.tsx'
 
 export function Router() {
