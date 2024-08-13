@@ -25,7 +25,7 @@ export const HeaderContainer = styled.header`
     }
   }
 
-  @media (min-width: 1440px) {
+  /* @media (min-width: 1440px) {
     .logo {
       width: initial;
     }
@@ -34,5 +34,5 @@ export const HeaderContainer = styled.header`
     img:last-child {
       width: initial;
     }
-  }
+  } */
 `
