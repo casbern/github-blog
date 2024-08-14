@@ -4,7 +4,7 @@ export const BlogContainer = styled.div``
 
 export const Profile = styled.div`
   padding: 3.2rem 4rem;
-  max-width: 86.4rem;
+  /* width: 100%; */
   background-color: ${(props) => props.theme['base-profile']};
 
   display: flex;
@@ -123,6 +123,7 @@ export const Cards = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3.2rem;
+  margin-bottom: 230px;
 `
 
 export const Card = styled.div`
@@ -130,14 +131,10 @@ export const Card = styled.div`
   border-radius: 10px;
   background-color: ${(props) => props.theme['base-post']};
 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 100%;
-
   .card-header {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 2rem;
 
     h1 {
@@ -146,6 +143,8 @@ export const Card = styled.div`
       font-weight: 700;
       line-height: 160%;
       color: ${(props) => props.theme['base-title']};
+
+      white-space: normal;
     }
 
     span {
@@ -154,19 +153,24 @@ export const Card = styled.div`
       font-weight: 400;
       line-height: 160%;
       color: ${(props) => props.theme['base-span']};
+
+      white-space: nowrap;
     }
   }
 
   p {
     color: ${(props) => props.theme['base-text']};
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
 
     font-size: 1.6rem;
     font-style: normal;
     font-weight: 400%;
     line-height: 160%;
+
+    //It sets the amount of line that will be shown.
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `
