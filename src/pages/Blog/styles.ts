@@ -23,6 +23,10 @@ export const Profile = styled.div`
     width: 14rem;
   }
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+
   .profile-header {
     display: flex;
     align-items: center;
@@ -124,6 +128,10 @@ export const Cards = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 3.2rem;
   margin-bottom: 230px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 export const Card = styled.div`
