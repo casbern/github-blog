@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-export const BlogContainer = styled.div``
-
 export const Profile = styled.div`
   padding: 3.2rem 4rem;
   /* width: 100%; */

@@ -1,4 +1,4 @@
-import { BlogContainer, Profile, Search, Cards, Card } from './styles'
+import { Profile, Search, Cards, Card } from './styles'
 import avatar from '../../assets/avatar.png'
 import {
   ArrowSquareUpRight,
@@ -9,7 +9,7 @@ import {
 
 export function Blog() {
   return (
-    <BlogContainer>
+    <>
       <Profile>
         <img src={avatar} alt="User image" />
 
@@ -139,6 +139,6 @@ export function Blog() {
           </p>
         </Card>
       </Cards>
-    </BlogContainer>
+    </>
   )
 }
