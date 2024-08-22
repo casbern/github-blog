@@ -7,33 +7,52 @@ import {
   Users,
 } from 'phosphor-react'
 
+import { api } from '../../lib/axios'
+import { useEffect, useState } from 'react'
+
 export function Blog() {
+  const [userData, setUserData] = useState('')
+
+  async function getUserData() {
+    try {
+      const response = await api.get('/users/casbern')
+      setUserData(response.data)
+    } catch (error) {
+      console.error('Erro ao fazer requisição:', error)
+    }
+  }
+
+  useEffect(() => {
+    getUserData()
+  })
+
+  console.log(userData)
   return (
     <>
       <Profile>
-        <img src={avatar} alt="User image" />
+        <img src={userData.avatar_url} alt="User image" />
 
         <div className="profile-content">
           <div className="profile-header">
-            <h1>Cameron Williamson</h1>
+            <h1>{userData.name}</h1>
             <div className="profile-link">
-              <a href="#">
+              <a
+                href="https://github.com/casbern"
+                target="_blank"
+                rel="noreferrer"
+              >
                 GITHUB
                 <ArrowSquareUpRight size={13} />
               </a>
             </div>
           </div>
 
-          <p>
-            Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-            viverra massa quam dignissim aenean malesuada suscipit. Nunc,
-            volutpat pulvinar vel mass.
-          </p>
+          <p>{userData.bio}</p>
 
           <div className="profile-info">
             <div className="profile">
               <GithubLogo size={18} />
-              <span>cameronwll</span>
+              <span>{userData.login}</span>
             </div>
 
             <div className="profile">
@@ -43,7 +62,7 @@ export function Blog() {
 
             <div className="profile">
               <Users size={18} />
-              <span>32 seguidores</span>
+              <span>{userData.followers} seguidores</span>
             </div>
           </div>
         </div>

@@ -2,13 +2,12 @@ import styled from 'styled-components'
 
 export const Profile = styled.div`
   padding: 3.2rem 4rem;
-  /* width: 100%; */
+  width: 100%;
   background-color: ${(props) => props.theme['base-profile']};
 
   display: flex;
   flex-direction: row;
   gap: 3.2rem;
-  justify-content: center;
   align-items: center;
 
   position: relative;
@@ -23,6 +22,11 @@ export const Profile = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
+  }
+
+  .profile-content {
+    /* width: 100%; */
+    flex: 1;
   }
 
   .profile-header {

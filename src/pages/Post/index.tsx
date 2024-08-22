@@ -14,12 +14,12 @@ export function Post() {
     <>
       <PostInfo>
         <div className="postInfo-links">
-          <a href="#">
+          <a href="/">
             <CaretLeft size={12} />
             VOLTAR
           </a>
 
-          <a href="#">
+          <a href="https://github.com/casbern" target="_blank" rel="noreferrer">
             VER NO GITHUB
             <ArrowSquareUpRight size={13} />
           </a>
