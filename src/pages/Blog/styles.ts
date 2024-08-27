@@ -144,6 +144,7 @@ export const Card = styled.div`
   .card-header {
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
     align-items: flex-start;
     margin-bottom: 2rem;
 

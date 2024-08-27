@@ -10,6 +10,8 @@ import {
 import { api } from '../../lib/axios'
 import { useEffect, useState } from 'react'
 
+import { formatDistance, parseISO } from 'date-fns'
+
 interface UserDataProps {
   avatar_url: string
   name: string
@@ -29,9 +31,7 @@ interface SearchResultProps {
 export function Blog() {
   const [userData, setUserData] = useState<UserDataProps | null>(null)
   const [searchIssues, setSearchIssues] = useState('')
-  const [searchResult, setSearchResult] = useState<SearchResultProps>()
-
-  console.log(searchResult)
+  const [searchResult, setSearchResult] = useState<SearchResultProps[]>([])
 
   function handleSearchIssues(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchIssues(event.target.value)
@@ -47,17 +47,12 @@ export function Blog() {
   }
 
   async function getSearch() {
-    if (!searchIssues) {
-      return
-    }
-
     try {
       const response = await api.get('/search/issues', {
         params: {
           q: `${searchIssues} repo:casbern/github-blog`,
         },
       })
-      console.log(response.data.items)
       setSearchResult(response.data.items)
     } catch (error) {
       console.error(error)
@@ -69,7 +64,13 @@ export function Blog() {
   }, [])
 
   useEffect(() => {
-    getSearch()
+    const timeoutId = setTimeout(() => {
+      getSearch()
+    }, 300)
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
   }, [searchIssues])
 
   return (
@@ -182,7 +183,11 @@ export function Blog() {
             <Card key={result.id}>
               <div className="card-header">
                 <h1>{result.title}</h1>
-                <span>{result.created_at}</span>
+                <span>
+                  {formatDistance(parseISO(result.created_at), new Date(), {
+                    addSuffix: true,
+                  })}
+                </span>
               </div>
 
               <p>{result.body}</p>
