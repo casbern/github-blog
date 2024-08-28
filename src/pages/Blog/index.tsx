@@ -8,8 +8,8 @@ import {
 } from 'phosphor-react'
 
 import { api } from '../../lib/axios'
+import { useGithubAPISearch } from '../../context/GithubContext'
 import { useEffect, useState } from 'react'
-
 import { formatDistance, parseISO } from 'date-fns'
 
 interface UserDataProps {
@@ -21,17 +21,11 @@ interface UserDataProps {
   company: string
 }
 
-interface SearchResultProps {
-  id: number
-  title: string
-  body: string
-  created_at: string
-}
-
 export function Blog() {
   const [userData, setUserData] = useState<UserDataProps | null>(null)
   const [searchIssues, setSearchIssues] = useState('')
-  const [searchResult, setSearchResult] = useState<SearchResultProps[]>([])
+
+  const { getSearch, searchResult } = useGithubAPISearch()
 
   function handleSearchIssues(event: React.ChangeEvent<HTMLInputElement>) {
     setSearchIssues(event.target.value)
@@ -46,26 +40,13 @@ export function Blog() {
     }
   }
 
-  async function getSearch() {
-    try {
-      const response = await api.get('/search/issues', {
-        params: {
-          q: `${searchIssues} repo:casbern/github-blog`,
-        },
-      })
-      setSearchResult(response.data.items)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
   useEffect(() => {
     getUserData()
   }, [])
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      getSearch()
+      getSearch(searchIssues)
     }, 300)
 
     return () => {
