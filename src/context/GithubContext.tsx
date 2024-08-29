@@ -1,11 +1,17 @@
 import { createContext, useState, ReactNode, useContext } from 'react'
 import { api } from '../lib/axios'
 
+interface UserProps {
+  login: string
+}
 interface SearchResultProps {
   id: number
+  number: number
   title: string
   body: string
   created_at: string
+  user: UserProps
+  comments: number
 }
 
 interface GithubAPIContextData {

@@ -11,6 +11,7 @@ import { api } from '../../lib/axios'
 import { useGithubAPISearch } from '../../context/GithubContext'
 import { useEffect, useState } from 'react'
 import { formatDistance, parseISO } from 'date-fns'
+import { Link } from 'react-router-dom'
 
 interface UserDataProps {
   avatar_url: string
@@ -57,7 +58,7 @@ export function Blog() {
   return (
     <>
       <Profile>
-        {userData ? (
+        {userData && (
           <>
             <img src={userData.avatar_url} alt="User image" />
 
@@ -98,49 +99,6 @@ export function Blog() {
               </div>
             </div>
           </>
-        ) : (
-          <>
-            <img src={avatar} alt="User image" />
-
-            <div className="profile-content">
-              <div className="profile-header">
-                <h1>Cameron Williamson</h1>
-                <div className="profile-link">
-                  <a
-                    href="https://github.com/casbern"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    GITHUB
-                    <ArrowSquareUpRight size={13} />
-                  </a>
-                </div>
-              </div>
-
-              <p>
-                Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu
-                viverra massa quam dignissim aenean malesuada suscipit. Nunc,
-                volutpat pulvinar vel mass.
-              </p>
-
-              <div className="profile-info">
-                <div className="profile">
-                  <GithubLogo size={18} />
-                  <span>cameronwll</span>
-                </div>
-
-                <div className="profile">
-                  <Buildings size={18} />
-                  <span>Rocketseat</span>
-                </div>
-
-                <div className="profile">
-                  <Users size={18} />
-                  <span>32 seguidores</span>
-                </div>
-              </div>
-            </div>
-          </>
         )}
       </Profile>
 
@@ -161,18 +119,20 @@ export function Blog() {
       <Cards>
         {searchResult &&
           searchResult.map((result) => (
-            <Card key={result.id}>
-              <div className="card-header">
-                <h1>{result.title}</h1>
-                <span>
-                  {formatDistance(parseISO(result.created_at), new Date(), {
-                    addSuffix: true,
-                  })}
-                </span>
-              </div>
+            <Link key={result.id} to={`/post/${result.number}`}>
+              <Card>
+                <div className="card-header">
+                  <h1>{result.title}</h1>
+                  <span>
+                    {formatDistance(parseISO(result.created_at), new Date(), {
+                      addSuffix: true,
+                    })}
+                  </span>
+                </div>
 
-              <p>{result.body}</p>
-            </Card>
+                <p>{result.body}</p>
+              </Card>
+            </Link>
           ))}
       </Cards>
     </>

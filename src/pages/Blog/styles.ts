@@ -131,12 +131,17 @@ export const Cards = styled.div`
   gap: 3.2rem;
   margin-bottom: 230px;
 
+  a {
+    text-decoration: none;
+  }
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
 `
 
 export const Card = styled.div`
+  min-height: 26rem;
   padding: 3.2rem;
   border-radius: 10px;
   background-color: ${(props) => props.theme['base-post']};
