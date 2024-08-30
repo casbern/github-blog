@@ -46,7 +46,7 @@ export function Post() {
   useEffect(() => {
     setTimeout(() => {
       getPostData()
-    }, 2000)
+    }, 1000)
   }, [])
 
   return (

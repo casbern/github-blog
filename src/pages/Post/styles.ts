@@ -61,6 +61,11 @@ export const PostInfo = styled.div`
     gap: 2.4rem;
     margin-top: 2.8rem;
 
+    @media (max-width: 488px) {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
     .postInfo {
       display: flex;
       align-items: center;

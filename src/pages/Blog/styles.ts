@@ -20,13 +20,14 @@ export const Profile = styled.div`
     width: 14rem;
   }
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-
   .profile-content {
     /* width: 100%; */
     flex: 1;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .profile-header {
