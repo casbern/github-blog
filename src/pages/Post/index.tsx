@@ -5,67 +5,107 @@ import {
   Chat,
   GithubLogo,
 } from 'phosphor-react'
-import { Content, PostInfo } from './styles'
-// import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-// import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import { useGithubAPISearch } from '../../context/GithubContext'
+import { Content, PostInfo, Spinner } from './styles'
+import { api } from '../../lib/axios'
 
 import { Link, useParams } from 'react-router-dom'
 import { formatDistance, parseISO } from 'date-fns'
+import { useEffect, useState } from 'react'
+import ClipLoader from 'react-spinners/ClipLoader'
+
+interface PostDataProps {
+  title: string
+  user: {
+    login: string
+  }
+  created_at: string
+  comments: number
+  body: string
+}
 
 export function Post() {
-  const { searchResult } = useGithubAPISearch()
-  const { postId } = useParams()
+  const { postNumber } = useParams()
 
-  const post = searchResult.find((result) => result.number === Number(postId))
+  const [postData, setPostData] = useState<PostDataProps | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  async function getPostData() {
+    setLoading(true)
+    try {
+      const response = await api.get(
+        `/repos/casbern/github-blog/issues/${postNumber}`,
+      )
+      setPostData(response.data)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      getPostData()
+    }, 2000)
+  }, [])
 
   return (
     <>
-      <PostInfo>
-        <div className="postInfo-links">
-          <Link to="/">
-            <CaretLeft size={12} />
-            VOLTAR
-          </Link>
+      {loading ? (
+        <Spinner>
+          <ClipLoader color="#3294F8" loading={loading} size={50} />
+        </Spinner>
+      ) : postData ? (
+        <>
+          <PostInfo>
+            <div className="postInfo-links">
+              <Link to="/">
+                <CaretLeft size={12} />
+                VOLTAR
+              </Link>
 
-          <Link
-            to={`https://github.com/casbern/github-blog/issues/${postId}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            VER NO GITHUB
-            <ArrowSquareUpRight size={13} />
-          </Link>
-        </div>
+              <Link
+                to={`https://github.com/casbern/github-blog/issues/${postNumber}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                VER NO GITHUB
+                <ArrowSquareUpRight size={13} />
+              </Link>
+            </div>
 
-        <h1>{post?.title}</h1>
+            <h1>{postData.title}</h1>
 
-        <div className="postInfo-info">
-          <div className="postInfo">
-            <GithubLogo size={18} />
-            <span>{post?.user.login}</span>
-          </div>
+            <div className="postInfo-info">
+              <div className="postInfo">
+                <GithubLogo size={18} />
+                <span>{postData.user.login}</span>
+              </div>
 
-          <div className="postInfo">
-            <CalendarBlank size={18} />
+              <div className="postInfo">
+                <CalendarBlank size={18} />
 
-            <span>
-              {formatDistance(parseISO(post.created_at), new Date(), {
-                addSuffix: true,
-              })}
-            </span>
-          </div>
+                <span>
+                  {formatDistance(parseISO(postData.created_at), new Date(), {
+                    addSuffix: true,
+                  })}
+                </span>
+              </div>
 
-          <div className="postInfo">
-            <Chat size={18} />
-            <span>{post?.comments} comentários</span>
-          </div>
-        </div>
-      </PostInfo>
+              <div className="postInfo">
+                <Chat size={18} />
+                <span>{postData.comments} comentários</span>
+              </div>
+            </div>
+          </PostInfo>
 
-      <Content>
-        <p>{post?.body}</p>
-      </Content>
+          <Content>
+            <p>{postData.body}</p>
+          </Content>
+        </>
+      ) : (
+        <p>Post não encontrado.</p>
+      )}
     </>
   )
 }

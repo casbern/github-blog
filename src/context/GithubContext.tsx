@@ -25,6 +25,7 @@ interface SearchResultProviderProps {
 
 // Create a context
 export const GithubAPIContext = createContext({} as GithubAPIContextData)
+
 // Create a Provider
 export function GithubAPIProvider({ children }: SearchResultProviderProps) {
   const [searchResult, setSearchResult] = useState<SearchResultProps[]>([])

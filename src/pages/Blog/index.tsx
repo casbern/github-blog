@@ -1,5 +1,4 @@
 import { Profile, Search, Cards, Card } from './styles'
-import avatar from '../../assets/avatar.png'
 import {
   ArrowSquareUpRight,
   Buildings,
@@ -12,6 +11,7 @@ import { useGithubAPISearch } from '../../context/GithubContext'
 import { useEffect, useState } from 'react'
 import { formatDistance, parseISO } from 'date-fns'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
 interface UserDataProps {
   avatar_url: string
@@ -120,18 +120,20 @@ export function Blog() {
         {searchResult &&
           searchResult.map((result) => (
             <Link key={result.id} to={`/post/${result.number}`}>
-              <Card>
-                <div className="card-header">
-                  <h1>{result.title}</h1>
-                  <span>
-                    {formatDistance(parseISO(result.created_at), new Date(), {
-                      addSuffix: true,
-                    })}
-                  </span>
-                </div>
+              <motion.div whileHover={{ scale: 1.1 }}>
+                <Card>
+                  <div className="card-header">
+                    <h1>{result.title}</h1>
+                    <span>
+                      {formatDistance(parseISO(result.created_at), new Date(), {
+                        addSuffix: true,
+                      })}
+                    </span>
+                  </div>
 
-                <p>{result.body}</p>
-              </Card>
+                  <p>{result.body}</p>
+                </Card>
+              </motion.div>
             </Link>
           ))}
       </Cards>

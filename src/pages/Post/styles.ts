@@ -1,5 +1,12 @@
 import styled from 'styled-components'
 
+export const Spinner = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5rem;
+`
+
 export const PostInfo = styled.div`
   padding: 3.2rem 4rem;
   /* width: 100%; */
